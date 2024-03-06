@@ -1,16 +1,20 @@
-const SingleConversation = () => {
+import { useConversationContext } from "../../context/ConversationContext";
+
+const SingleConversation = ({conversation,lastIdx}) => {
+
+  const {selectedConversation,setSelectedConversation} = useConversationContext();
+  const isSelected = selectedConversation?._id===conversation._id;
   return (
     <>
-    <div className="flex hover:bg-sky-500 p-2 items-center ">
+    <div className={`flex hover:bg-sky-500 p-2 items-center ${isSelected ? "bg-sky-500" : ""}`} onClick={()=>{setSelectedConversation(conversation)}}>
       <div className="avatar online ">
         <div className="w-10 rounded-full">
-          <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          <img src={conversation.profilePic} alt="user avatar"/>
         </div>
       </div>
-      <div className="font-bold text-gray-300 ml-3">John Doe</div>
-      <div className=" ml-auto">😂</div>
+      <div className="font-bold text-gray-300 ml-3">{conversation.fullName}</div>
     </div>
-    <div className='divider my-0 py-0 h-1' />
+    {!lastIdx && <div className='divider my-0 py-0 h-1' />}
     </>
   );
 };

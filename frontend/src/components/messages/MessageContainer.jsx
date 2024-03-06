@@ -1,12 +1,19 @@
+import { useEffect } from "react";
+import { useConversationContext } from "../../context/ConversationContext";
 import MessageHeader from "./MessageHeader";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 const MessageContainer = () => {
-  const chatSelected = false;
+  const { selectedConversation,setSelectedConversation } = useConversationContext();
+
+  useEffect(()=>{
+    //clean up fnc
+    return ()=>setSelectedConversation(null);
+  },[setSelectedConversation])
   return (
     <div className="flex flex-col 'md:min-w-[450px] w-96">
-      {chatSelected ? (
+      {selectedConversation ? (
         <>
           <MessageHeader />
           <Messages />
